@@ -35,4 +35,24 @@ final class DecisionEngineTest extends TestCase
             'высокий LTV' => [120.0, DecisionEngine::REJECT],
         ];
     }
+
+    #[DataProvider('mileageValues')]
+    public function testAppliesMileageRuleWithoutDowngradingReject(
+        float $ltv,
+        int $mileage,
+        string $expected,
+    ): void {
+        self::assertSame($expected, $this->engine->decide($ltv, $mileage));
+    }
+
+    /** @return array<string,array{float,int,string}> */
+    public static function mileageValues(): array
+    {
+        return [
+            'ниже порога пробега' => [50.0, 399999, DecisionEngine::APPROVE],
+            'на пороге пробега' => [50.0, 400000, DecisionEngine::APPROVE],
+            'сразу выше порога пробега' => [50.0, 400001, DecisionEngine::REVIEW],
+            'высокий LTV остаётся reject' => [95.0, 400001, DecisionEngine::REJECT],
+        ];
+    }
 }

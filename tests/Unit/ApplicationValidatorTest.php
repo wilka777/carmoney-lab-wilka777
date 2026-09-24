@@ -79,4 +79,28 @@ final class ApplicationValidatorTest extends TestCase
             );
         }
     }
+
+    public function testAcceptsMileageAboveDecisionThreshold(): void
+    {
+        $result = $this->validator->validate($this->validPayload(['mileage' => 400001]));
+
+        self::assertSame(400001, $result['mileage']);
+    }
+
+    public function testRejectsMissingMileage(): void
+    {
+        $payload = $this->validPayload();
+        unset($payload['mileage']);
+
+        $this->expectException(ValidationException::class);
+
+        $this->validator->validate($payload);
+    }
+
+    public function testRejectsMileageAboveValidationMaximum(): void
+    {
+        $this->expectException(ValidationException::class);
+
+        $this->validator->validate($this->validPayload(['mileage' => 500001]));
+    }
 }
