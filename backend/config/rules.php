@@ -21,6 +21,8 @@ return [
         'min_year' => 1990,
         'max_age_years' => 20,
         'max_mileage_km' => 500000,
+        // Порог решения review; не влияет на валидационный максимум выше.
+        'review_mileage_threshold_km' => 400000,
     ],
 
     'amount' => [
