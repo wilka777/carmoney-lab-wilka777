@@ -31,6 +31,7 @@ curl http://localhost:${APP_PORT:-8080}/health
 - Бизнес-числа — в `backend/config/rules.php`, не в коде
 - Тесты PHPUnit 11: namespace `CarMoneyLab\Tests\Unit`, AAA (Arrange/Act/Assert), имя описывает поведение, тест заканчивается assert'ом
 - Поиск по коду — через `ast-index` (`search`, `class`, `symbol`, `usages`, `callers`), а не чтением файлов целиком.
+- Проверку реального интерфейса и того, что видит пользователь, выполнять через Playwright со скриншотом; не заменять её тестами или чтением фронтенда.
 
 ## Правила для агента
 - Не читать и не править `.env*`. Не запускать `scripts/reset_db.sh`.
